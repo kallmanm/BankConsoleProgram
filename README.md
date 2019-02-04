@@ -15,6 +15,8 @@ To run this program, download the files and run in any Java IDE. The main file i
 
 - Applying "Object Oriented Programming" and reusing code when possible.
 - Making and using abstract classes and methods.
-- Making and using Static variables and methods.
+- Making and using static variables and methods.
 - Using private, protected and public variables.
 - Making and managing multiple Threads.
+- Reading and writing Java objects to a file.
+- Serializing objects in Java and deserializing them back into Java objects.

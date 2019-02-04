@@ -13,19 +13,16 @@ public class Transactions
       String menuChoice = "0";
       String name;
       String accNumber;
+      int an;
       double balance;
       double amount;
       int accountType;
       double fee = 0.00;
-      String keyCatcher;
+      Account tempHolder;
 
       //HasMap for keeping track of account number (as key) and Account classes (as Objects) that are connected to the key.
-      HashMap<String, Account> accountDB = new HashMap();
-
-      //Populating List with examples
-      accountDB.put(Account.getCounter(),new SavingsAccount("Ted Murphy", 102.56, 1));
-      accountDB.put(Account.getCounter(),new CheckingAccount ("Edward Demsey",759.32, 2));
-      accountDB.put(Account.getCounter(),new CreditAccount ("Test Credit Account", 0.00, 3));
+      //FileHandler method readFromFile check if there is a file to read from and if not creates a new HashMap.
+      HashMap<String, Account> accountDB = FileHandler.readFromFile();
 
       //The Thread that manages interest calculations.
       InterestHandler ih = new InterestHandler(accountDB);
@@ -68,9 +65,12 @@ public class Transactions
                      System.out.println("Enter Starting Balance");
                      balance = Double.parseDouble(input.nextLine());
                      accountType = 1;
-                     accountDB.put(keyCatcher=Account.getCounter(),new SavingsAccount(name, balance, accountType));
+                     an=Validator.createUniqueNumber(accountDB);
+
+                     tempHolder = new SavingsAccount(name, balance, accountType, an);
+                     accountDB.put(tempHolder.getAcctNumber(),tempHolder);
                      System.out.println("SavingsAccount successfully created:");
-                     System.out.println(accountDB.get(keyCatcher));
+                     System.out.println(accountDB.get(tempHolder.getAcctNumber()));
                      break;
 
                   case "2":
@@ -81,9 +81,12 @@ public class Transactions
                      System.out.println("Enter Starting Balance");
                      balance = Double.parseDouble(input.nextLine());
                      accountType = 2;
-                     accountDB.put(keyCatcher=Account.getCounter(),new CheckingAccount(name, balance, accountType));
+                     an=Validator.createUniqueNumber(accountDB);
+
+                     tempHolder = new CheckingAccount(name, balance, accountType, an);
+                     accountDB.put(tempHolder.getAcctNumber(),tempHolder);
                      System.out.println("CheckingAccount successfully created:");
-                     System.out.println(accountDB.get(keyCatcher));
+                     System.out.println(accountDB.get(tempHolder.getAcctNumber()));
                      break;
 
                   case "3":
@@ -92,9 +95,12 @@ public class Transactions
                      name = input.nextLine();
                      balance = 0;
                      accountType = 3;
-                     accountDB.put(keyCatcher=Account.getCounter(),new CreditAccount(name,balance,accountType));
+                     an=Validator.createUniqueNumber(accountDB);
+
+                     tempHolder = new CreditAccount(name, balance, accountType, an);
+                     accountDB.put(tempHolder.getAcctNumber(),tempHolder);
                      System.out.println("CreditAccount successfully created:");
-                     System.out.println(accountDB.get(keyCatcher));
+                     System.out.println(accountDB.get(tempHolder.getAcctNumber()));
 
                      break;
                   case "4":
@@ -259,8 +265,13 @@ public class Transactions
             case "5":
 
                System.out.println("Exiting Program...");
+
                //Stops the InterestHandler Thread...
                ih.interrupt();
+
+               //WriteToFile saves the current state of the accounts so when the program is started next time
+               //it will load the last saved data.
+               FileHandler.writeToFile(accountDB);
                break;
 
 //--------------------------DEFAULT-------------------------------------------------------------

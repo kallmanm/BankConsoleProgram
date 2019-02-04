@@ -9,9 +9,9 @@ public class CheckingAccount extends Account{
     private double balance;
 
 
-    public CheckingAccount(String name, double balance, int type) {
+    public CheckingAccount(String name, double balance, int type, int acctNumber) {
 
-        super(name, balance, type);
+        super(name, balance, type, acctNumber);
 
     }
 

@@ -5,9 +5,9 @@ public class CreditAccount extends Account {
     private double tempBalance = 0.00;
     private double totalInterestEarned = 0.00;
 
-    public CreditAccount(String name, double balance, int type) {
+    public CreditAccount(String name, double balance, int type, int acctNumber) {
 
-        super(name, balance, type);
+        super(name, balance, type, acctNumber);
 
     }
 

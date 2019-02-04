@@ -1,10 +1,16 @@
+import java.io.Serializable;
 import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Random;
 
-public abstract class Account
+public abstract class Account implements Serializable
 {
 
+   //unique serial
+   private static final long serialVersionUID = 1L;
+
    //static variable for unique acctNumber that increments in generateAccountNr()
-   private static int counter =100;
+   //private static int counter =100;
    private String acctNumber;
    protected double balance;
    private String name;
@@ -14,14 +20,14 @@ public abstract class Account
    //-----------------------------------------------------------------
    //  Constructor
    //-----------------------------------------------------------------
-   public Account (String name, double balance, int type)
+   public Account (String name, double balance, int type, int acctNumber)
    {
 
       setName(name);
-      setAcctNumber(counter);
+      setAcctNumber(acctNumber);
       setBalance(balance);
       setType(type);
-      Account.generateAccountNr();
+
    }
 
    //-----------------------------------------------------------------
@@ -63,7 +69,13 @@ public abstract class Account
    {
       this.name = name;
    }
-   public void setAcctNumber(int acctNumber) { this.acctNumber = Integer.toString(acctNumber); }
+
+   //Set min-max here so that account numbers can have a value of 100-1000. Can expand ofcourse if needed.
+   //Kept on purpose smaller for easier testability.
+   public void setAcctNumber(int acctNumber) {
+      this.acctNumber = Integer.toString(acctNumber);
+   }
+
    public void setBalance(double balance){
       if(balance>=0){
          this.balance =balance;
@@ -71,6 +83,7 @@ public abstract class Account
          System.out.println("Cannot be negetive value, input valid balance.");
       }
    }
+
    public void setType(int type){
       try{
          switch (type){
@@ -136,8 +149,8 @@ public abstract class Account
    //  Static Functions
    //-----------------------------------------------------------------
 
-   static void generateAccountNr(){ counter++; }
-   static String getCounter(){return Integer.toString(counter);}
+   //static void generateAccountNr(){ counter++; }
+   //static String getCounter(){return Integer.toString(counter);}
 
    //-----------------------------------------------------------------
    //  Returns a one-line description of the account as a string.
@@ -149,3 +162,7 @@ public abstract class Account
       return ("\nAccount Number: " + acctNumber + "\t| " + "Account Holder: " + name + "\t| " + "Account Balance: " + fmt.format(balance) + "\t| "+"Account Type: " + this.getType());
    }
 }
+
+
+
+

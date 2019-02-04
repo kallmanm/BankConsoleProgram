@@ -7,9 +7,9 @@ public class SavingsAccount extends Account{
 
 
 
-    public SavingsAccount(String name, double balance, int type) {
+    public SavingsAccount(String name, double balance, int type, int acctNumber) {
 
-        super(name, balance, type);
+        super(name, balance, type, acctNumber);
 
     }
 
